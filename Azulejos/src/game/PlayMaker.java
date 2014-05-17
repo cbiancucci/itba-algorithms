@@ -9,16 +9,12 @@ public class PlayMaker {
 	private Board board;
 	private BoardPanel boardPanel;
 	private InfoPanel infoPanel;
-	private int maxTime, maxLevel;
-	private boolean prune, tree;
+	private Options options;
 	private long start;
 	
-	public PlayMaker(Board board, int maxLevel, int maxTime, boolean prune, boolean tree){
+	public PlayMaker(Board board, Options options){
 		this.board = board;
-		this.maxLevel = maxLevel;
-		this.maxTime = maxTime;
-		this.prune = prune;
-		this.tree = tree;
+		this.options = options;
 	}
 	
 	public void makeMove(int x, int y){
@@ -27,9 +23,9 @@ public class PlayMaker {
 		if(moved){
 			moveMade();
 			/**
-			 * TODO: Find a better way to send variables. Board, maxLevel, maxTime, prune, tree are already in PlayMarker.
+			 * TODO: Find a better way to send variables. Board, options are already in PlayMarker.
 			 */
-			new Minimax(this, board, maxLevel, maxTime, prune, tree);
+			new Minimax(this, board, options);
 			start = System.currentTimeMillis();
 		}
 	}

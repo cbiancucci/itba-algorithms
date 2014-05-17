@@ -1,6 +1,7 @@
 package minimax;
 
 import game.Board;
+import game.Options;
 import game.PlayMaker;
 
 import java.awt.Point;
@@ -15,26 +16,23 @@ public class Minimax implements Runnable{
 
 	private PlayMaker playMaker;
 	private BoardState root;
-	private int maxLevel, maxTime;
-	private boolean prune, time, tree;
+	private Options options;
+	private boolean time;
 	
-	public Minimax(PlayMaker pm, Board board, int maxLevel, int maxTime, boolean prune, boolean tree){
+	public Minimax(PlayMaker pm, Board board, Options options){
 		root = new StateMax(board.getCopy(), new Point(-1, -1));
 		this.playMaker = pm;
-		this.maxLevel = maxLevel;
-		this.maxTime = maxTime;
-		this.prune = prune;
-		this.tree = tree;
+		this.options = options;
 		time = true;
 		Thread t = new Thread(this, "Minimax");
 		t.start();
 	}
 	
 	public void run() {
-		if(maxTime != GameCenter.INFINITE){
-			new myTimer(this, maxTime);
+		if(options.getMaxTime() != GameCenter.INFINITE){
+			new myTimer(this, options.getMaxTime());
 		}
-		runAlgorithm(root, maxLevel, GameCenter.INFINITE);
+		runAlgorithm(root, options.getMaxLevel(), GameCenter.INFINITE);
 		returnMove();
 	}
 	
@@ -47,7 +45,7 @@ public class Minimax implements Runnable{
 		BoardState chosen = null;
 		for(BoardState child: state.getBoard().possibleMoves(state.isMax())){
 			state.addChild(child);
-			if(!prune || state.analizeState(parentScore)){
+			if(!options.getPrune() || state.analizeState(parentScore)){
 				int childScore = runAlgorithm(child, deep-1, state.getScore());
 				if(state.updateScore(childScore)){
 					if(chosen != null) chosen.chosen(false);
@@ -64,7 +62,7 @@ public class Minimax implements Runnable{
 	
 	private void returnMove(){
 		Board optimal = root.getOptimalState().getBoard();
-		if(tree) drawTree();
+		if(options.getTree()) drawTree();
 		playMaker.recievePCmovement(optimal);
 	}
 	
