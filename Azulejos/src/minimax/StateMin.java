@@ -9,19 +9,19 @@ import main.GameCenter;
 public class StateMin extends BoardState{
 
 	public StateMin(Board board, Point move){
-		super(board,move,GameCenter.INFINITE);
+		super(board, move, GameCenter.INFINITE);
 	}
 	
 	@Override
 	public boolean analizeState(int parentScore) {
-		return getScore()>parentScore;
+		return getScore() > parentScore;
 	}
 	
 	@Override
 	public boolean updateScore(int childScore) {
-		int score=getScore();
+		int score = getScore();
 		setScore(Math.min(getScore(), childScore));
-		return score!=getScore();
+		return score != getScore();
 	}
 	
 	@Override

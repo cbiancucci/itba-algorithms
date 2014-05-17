@@ -19,10 +19,10 @@ public abstract class BoardState {
 	private boolean pruned, chosen;
 	
 	public BoardState(Board board, Point move, int score){
-		this.board=board;
-		this.score=score;
-		this.move=move;
-		childs=new LinkedList<BoardState>();
+		this.board = board;
+		this.score = score;
+		this.move = move;
+		childs = new LinkedList<BoardState>();
 	}
 	
 	public void addChild(BoardState state){
@@ -30,20 +30,20 @@ public abstract class BoardState {
 	}
 	
 	public BoardState getOptimalState(){
-		if(childs.size()==0){
+		if(childs.size() == 0){
 			System.out.println("No more moves available");
 			return this;
 		}
-		int max=-GameCenter.INFINITE-1;
-		BoardState optimal=null;
+		int max = -GameCenter.INFINITE-1;
+		BoardState optimal = null;
 		for(BoardState child: childs){
-			int childScore=child.getScore();
-			if(childScore>max){
-				max=childScore;
-				optimal=child;
+			int childScore = child.getScore();
+			if(childScore > max){
+				max = childScore;
+				optimal = child;
 			}
 		}
-		score=max;
+		score = max;
 		return optimal;
 	}
 	
@@ -52,7 +52,7 @@ public abstract class BoardState {
 	}
 	
 	public void setScore(int score){
-		this.score=score;
+		this.score = score;
 	}
 	
 	public abstract boolean updateScore(int childScore);
@@ -60,10 +60,10 @@ public abstract class BoardState {
 	
 	public String getLabel(){
 		String scoreString;
-		if(pruned) scoreString="";
-		else if(score==GameCenter.INFINITE) scoreString="WIN";
-		else if(score==-GameCenter.INFINITE) scoreString="LOSE";
-		else scoreString=score+"";
+		if(pruned) scoreString = "";
+		else if(score == GameCenter.INFINITE) scoreString="WIN";
+		else if(score == -GameCenter.INFINITE) scoreString="LOSE";
+		else scoreString = score+"";
 		return "\"("+move.x+","+move.y+")"+" "+scoreString+"\"";
 	}
 	
@@ -88,16 +88,16 @@ public abstract class BoardState {
 	}
 	
 	public void pruned(){
-		pruned=true;
+		pruned = true;
 	}
 	
 	public void chosen(boolean chosen){
-		this.chosen=chosen;
+		this.chosen = chosen;
 	}
 	
 	public abstract boolean isMax();
 	
 	public void calculateScore(){
-		score=board.getScore();
+		score = board.getScore();
 	}
 }

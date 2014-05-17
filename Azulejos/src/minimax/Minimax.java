@@ -13,45 +13,45 @@ import main.GameCenter;
 
 public class Minimax implements Runnable{
 
-	private PlayMaker pm;
+	private PlayMaker playMaker;
 	private BoardState root;
 	private int maxLevel, maxTime;
 	private boolean prune, time, tree;
 	
 	public Minimax(PlayMaker pm, Board board, int maxLevel, int maxTime, boolean prune, boolean tree){
-		root=new StateMax(board.getCopy(), new Point(-1,-1));
-		this.pm=pm;
-		this.maxLevel=maxLevel;
-		this.maxTime=maxTime;
-		this.prune=prune;
-		this.tree=tree;
-		time=true;
-		Thread t=new Thread(this,"Minimax");
+		root = new StateMax(board.getCopy(), new Point(-1, -1));
+		this.playMaker = pm;
+		this.maxLevel = maxLevel;
+		this.maxTime = maxTime;
+		this.prune = prune;
+		this.tree = tree;
+		time = true;
+		Thread t = new Thread(this, "Minimax");
 		t.start();
 	}
 	
 	public void run() {
-		if(maxTime!= GameCenter.INFINITE){
-			new myTimer(this,maxTime);
+		if(maxTime != GameCenter.INFINITE){
+			new myTimer(this, maxTime);
 		}
-		runAlgorithm(root, maxLevel,GameCenter.INFINITE);
+		runAlgorithm(root, maxLevel, GameCenter.INFINITE);
 		returnMove();
 	}
 	
 	private int runAlgorithm(BoardState state, int deep, int parentScore){
-		if(deep==0 || !time){
+		if(deep == 0 || !time){
 			state.calculateScore();
 			return state.getScore();
 		}
 		
-		BoardState chosen=null;
+		BoardState chosen = null;
 		for(BoardState child: state.getBoard().possibleMoves(state.isMax())){
 			state.addChild(child);
 			if(!prune || state.analizeState(parentScore)){
-				int childScore=runAlgorithm(child, deep-1, state.getScore());
+				int childScore = runAlgorithm(child, deep-1, state.getScore());
 				if(state.updateScore(childScore)){
-					if(chosen!=null) chosen.chosen(false);
-					chosen=child;
+					if(chosen != null) chosen.chosen(false);
+					chosen = child;
 					chosen.chosen(true);
 				}
 			}else{
@@ -63,9 +63,9 @@ public class Minimax implements Runnable{
 	}
 	
 	private void returnMove(){
-		Board optimal=root.getOptimalState().getBoard();
+		Board optimal = root.getOptimalState().getBoard();
 		if(tree) drawTree();
-		pm.recievePCmovement(optimal);
+		playMaker.recievePCmovement(optimal);
 	}
 	
 	private void drawTree(){
@@ -79,14 +79,23 @@ public class Minimax implements Runnable{
 			writer.newLine();
 		    root.drawTree(writer);
 		    writer.write("}");
-		} catch (IOException e) {}
+		} catch (IOException e) {
+			/**
+			 * Verify exceptions
+			 */
+		}
 		finally {
-		   try {writer.close();} 
-		   catch (Exception e) {}
+		   try {
+			   writer.close();
+		   } catch (Exception e) {
+			   /**
+			    * TODO: Verify exceptions.
+			    */
+		   }
 		}
 	}
 	
 	public void timeUp(){
-		time=false;
+		time = false;
 	}
 }

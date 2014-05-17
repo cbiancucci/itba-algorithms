@@ -6,11 +6,11 @@ public class Tile {
 	private boolean mark;
 	
 	public Tile(int color){
-		this.color=color;
+		this.color = color;
 	}
 	
 	public void eliminate(){
-		color=0;
+		color = 0;
 	}
 	
 	public int getColor(){
@@ -18,7 +18,7 @@ public class Tile {
 	}
 	
 	public void mark(){
-		mark=true;
+		mark = true;
 	}
 	
 	public boolean isMarked(){
