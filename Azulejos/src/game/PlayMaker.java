@@ -41,6 +41,7 @@ public class PlayMaker {
 				 */
 			}
 		}
+		
 		board = b;
 		board.PCfinished();
 		moveMade();

@@ -97,7 +97,8 @@ public abstract class BoardState {
 	
 	public abstract boolean isMax();
 	
-	public void calculateScore(){
+	public int calculateScore(){
 		score = board.getScore();
+		return score;
 	}
 }

@@ -5,7 +5,11 @@ import game.PlayMaker;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class InfoPanel extends JPanel{
@@ -21,6 +25,15 @@ public class InfoPanel extends JPanel{
 		this.WIDTH = WIDTH;
 		
 		playMaker.setInfoPanel(this);
+		
+		JButton close = new JButton(new ImageIcon("Source/close-cross.jpg",  "Close Game"));
+		close.setBounds(WIDTH-16, 0, 16, 16);
+		close.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
+		add(close);
 		
 		setVisible(true);
 	}

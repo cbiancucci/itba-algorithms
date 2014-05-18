@@ -5,10 +5,14 @@ import game.Options;
 import game.PlayMaker;
 
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+
+import javax.swing.Timer;
 
 import main.GameCenter;
 
@@ -30,13 +34,14 @@ public class Minimax implements Runnable{
 	
 	public void run() {
 		if(options.getMaxTime() != GameCenter.INFINITE){
-			new myTimer(this, options.getMaxTime());
+			runTimeAlgorithm();
+		}else{
+			runDeepAlgorithm(root, options.getMaxLevel(), GameCenter.INFINITE);
+			returnMove();
 		}
-		runAlgorithm(root, options.getMaxLevel(), GameCenter.INFINITE);
-		returnMove();
 	}
 	
-	private int runAlgorithm(BoardState state, int deep, int parentScore){
+	private int runDeepAlgorithm(BoardState state, int deep, int parentScore){
 		if(deep == 0 || !time){
 			state.calculateScore();
 			return state.getScore();
@@ -46,7 +51,7 @@ public class Minimax implements Runnable{
 		for(BoardState child: state.getBoard().possibleMoves(state.isMax())){
 			state.addChild(child);
 			if(!options.getPrune() || state.analizeState(parentScore)){
-				int childScore = runAlgorithm(child, deep-1, state.getScore());
+				int childScore = runDeepAlgorithm(child, deep-1, state.getScore());
 				if(state.updateScore(childScore)){
 					if(chosen != null) chosen.chosen(false);
 					chosen = child;
@@ -58,6 +63,31 @@ public class Minimax implements Runnable{
 			
 		}
 		return state.getScore();
+	}
+	
+	private void runTimeAlgorithm(){
+		
+		Timer timer=new Timer(options.getMaxTime()*950,new ActionListener(){
+			public void actionPerformed(ActionEvent ae) {
+				timeUp();
+			}
+		});
+		timer.setRepeats(false);
+		timer.start();
+		
+		//new MyTimer(this,options.getMaxTime());
+		
+		int i=1;
+		while(time){
+			BoardState current = new StateMax(root.getBoard().getCopy(), new Point(-1, -1));
+			runDeepAlgorithm(current, i++, GameCenter.INFINITE);
+			if(time) root = current;
+		}
+	}
+	
+	public void timeUp(){
+		returnMove();
+		time = false;
 	}
 	
 	private void returnMove(){
@@ -93,7 +123,4 @@ public class Minimax implements Runnable{
 		}
 	}
 	
-	public void timeUp(){
-		time = false;
-	}
 }
