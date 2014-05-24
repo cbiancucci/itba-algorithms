@@ -108,7 +108,16 @@ public class GameCenter extends JFrame{
 				else
 					throw new UnsupportedSyntaxException();
 			}
-				
+			
+			if(args[6] != null){
+				if(args[6].equals("-prune"))
+					prune = true;
+				else if(args[6].equals("-tree"))
+					tree = true;
+				else
+					throw new UnsupportedSyntaxException();
+			}
+			
 			if(visual)
 				new GameCenter(fileName, new Options(depth, maxTime, prune, tree));
 		}
