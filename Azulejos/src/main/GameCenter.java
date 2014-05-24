@@ -34,7 +34,6 @@ public class GameCenter extends JFrame{
 		setSize(WIDTH,HEIGHT);
 		
 		
-		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2-10);
 		
@@ -120,6 +119,8 @@ public class GameCenter extends JFrame{
 			
 			if(visual)
 				new GameCenter(fileName, new Options(depth, maxTime, prune, tree));
+			else
+				System.out.println("Console mode");
 		}
 	}
 	
