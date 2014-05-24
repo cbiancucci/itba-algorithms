@@ -84,8 +84,8 @@ public class Board {
 	
 	private int calculatePoints(int n){
 		if(n <= 3) n--;
-		else if(n > 5) n *= 2;
 		else if(n == 5) n = 8;
+		else if(n > 5) n *= 2;
 		return n;
 	}
 	

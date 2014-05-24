@@ -1,5 +1,6 @@
 package main;
 
+import exceptions.UnsupportedSyntaxException;
 import game.Board;
 import game.Options;
 import game.PlayMaker;
@@ -74,7 +75,43 @@ public class GameCenter extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		new GameCenter("Tableros/tablero2.txt", new Options(15, INFINITE, true,false));
+		
+		if(args[0].equals("-file") && args[1] != null){
+				
+			String fileName = args[1].toString();
+				
+			int maxTime = INFINITE;
+			int depth = 1;
+			boolean visual = false;
+			boolean prune = false;
+			boolean tree = false;
+				
+			if(args[2] != null && args[2].equals("-maxtime") && args[3] != null)
+				maxTime = Integer.valueOf(args[3]);
+			else if(args[2] != null && args[2].equals("-depth") && args[3] != null)
+				depth = Integer.valueOf(args[3]);
+			else
+				throw new UnsupportedSyntaxException();
+			
+			if(args[4].equals("-visual"))
+				visual = true;
+			else if(args[4].equals("-console"))
+				visual = false;
+			else
+				throw new UnsupportedSyntaxException();
+				
+			if(args[5] != null){
+				if(args[5].equals("-prune"))
+					prune = true;
+				else if(args[5].equals("-tree"))
+					tree = true;
+				else
+					throw new UnsupportedSyntaxException();
+			}
+				
+			if(visual)
+				new GameCenter(fileName, new Options(depth, maxTime, prune, tree));
+		}
 	}
 	
 }
