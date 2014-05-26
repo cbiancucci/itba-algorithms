@@ -75,15 +75,67 @@ public class GameCenter extends JFrame{
 	
 	public static void main(String[] args) {
 		
-		if(args[0].equals("-file") && args[1] != null){
-				
-			String fileName = args[1].toString();
-				
+		
+		if (args.length != 0){
+			
+			String fileName = "";
 			int maxTime = INFINITE;
 			int depth = 1;
 			boolean visual = false;
 			boolean prune = false;
 			boolean tree = false;
+			
+			for (int i = 0; i < args.length; i++){
+				
+				switch (args[i]) {
+					case "-file":
+						if(args[i+1] != null)
+							fileName = args[i+1].toString();
+						i++;
+						break;
+					
+					case "-maxtime":
+						if(args[i+1] != null)
+							maxTime = Integer.valueOf(args[i+1]);
+						i++;
+						break;
+
+					case "-depth":
+						if(args[i+1] != null)
+							depth = Integer.valueOf(args[i+1]);
+						i++;
+						break;
+						
+					case "-visual":
+						visual = true;
+						break;
+					
+					case "-console":
+						visual = false;
+						break;
+						
+					case "-prune":
+						prune = true;
+						break;
+				default:
+					throw new UnsupportedSyntaxException();
+				}
+				
+			}
+			
+			if(visual)
+				new GameCenter(fileName, new Options(depth, maxTime, prune, tree));
+			else
+				System.out.println("Console mode");
+			
+		} else {
+			throw new UnsupportedSyntaxException();
+		}
+			
+		
+		/*if(args.length != 0 && args[0] != null && args[0].toString().equals("-file") && args[1] != null){
+				
+			String fileName = args[1].toString();
 				
 			if(args[2] != null && args[2].equals("-maxtime") && args[3] != null)
 				maxTime = Integer.valueOf(args[3]);
@@ -121,7 +173,7 @@ public class GameCenter extends JFrame{
 				new GameCenter(fileName, new Options(depth, maxTime, prune, tree));
 			else
 				System.out.println("Console mode");
-		}
+		}*/
 	}
 	
 }
