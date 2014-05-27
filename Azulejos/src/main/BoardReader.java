@@ -23,15 +23,15 @@ public class BoardReader {
 			Tile[][] b = new Tile[sizeX][sizeY];
 			
 			for(int j = sizeY-1 ; j >= 0 ; j--){
+				String line = br.readLine();
 				for(int i = 0 ; i < sizeX; i++){
 					int c;
-					switch(c = br.read()){
+					switch(c = line.charAt(i)){
 						case ' ':	b[i][j] = new Tile(0);
 									break;
 						default:	b[i][j] = new Tile(c-'0');
 					}
 				}
-				br.read();
 			}
 			
 			board = new Board(b, p1points, p2points);
