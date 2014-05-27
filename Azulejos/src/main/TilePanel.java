@@ -1,6 +1,6 @@
 package main;
 
-import game.PlayMaker;
+import game.VisualPlay;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -12,12 +12,12 @@ import javax.swing.JPanel;
 public class TilePanel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
-	private PlayMaker playMaker;
+	private VisualPlay playMaker;
 	private int x, y;
 	private boolean selected;
 	private Color[] colors;
 	
-	public TilePanel(PlayMaker pm, int tileSIZE, int x, int y, Color[] colors){
+	public TilePanel(VisualPlay pm, int tileSIZE, int x, int y, Color[] colors){
 		setLayout(null);
 		setSize(tileSIZE, tileSIZE);
 		addMouseListener(new myMouseListener());

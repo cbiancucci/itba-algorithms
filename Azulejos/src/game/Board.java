@@ -131,9 +131,9 @@ public class Board {
 	
 	public int getScore(){
 		int ans = points[1] - points[0];
-		if(board[0][0].getColor() != 0 || ans == 0) return ans;
-		if(ans > 0) return GameCenter.INFINITE;
-		else  return -GameCenter.INFINITE;
+		if(!gameOver() || ans == 0) return ans;
+		if(ans > 0) return (int)(GameCenter.INFINITE * 0.5) + ans;
+		else  return (int)(-GameCenter.INFINITE * 0.5) + ans;
 	}
 	
 	public List<BoardState> possibleMoves(boolean max){

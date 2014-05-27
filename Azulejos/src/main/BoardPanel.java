@@ -1,6 +1,6 @@
 package main;
 
-import game.PlayMaker;
+import game.VisualPlay;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -16,12 +16,12 @@ public class BoardPanel extends JLayeredPane implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private PlayMaker playMaker;
+	private VisualPlay playMaker;
 	private Cursor humanTurn, pcTurn;
 	private JLabel gameOver;
 	private JButton close;
 	
-	public BoardPanel(PlayMaker pm, Color[] colors, int tileSIZE, int sizeX, int sizeY){
+	public BoardPanel(VisualPlay pm, Color[] colors, int tileSIZE, int sizeX, int sizeY){
 		setLayout(null);
 		setSize(tileSIZE*sizeX,tileSIZE*sizeY);
 		humanTurn = Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR);

@@ -46,6 +46,7 @@ public class Minimax implements Runnable{
 			state.calculateScore();
 			return state.getScore();
 		}
+		if(state.getBoard().gameOver()) return state.calculateScore();
 		
 		BoardState chosen = null;
 		for(BoardState child: state.getBoard().possibleMoves(state.isMax())){
@@ -62,7 +63,7 @@ public class Minimax implements Runnable{
 			}
 			
 		}
-		if(chosen == null) state.calculateScore();
+		
 		return state.getScore();
 	}
 	
@@ -75,8 +76,6 @@ public class Minimax implements Runnable{
 		});
 		timer.setRepeats(false);
 		timer.start();
-		
-		//new MyTimer(this,options.getMaxTime());
 		
 		int i=1;
 		while(time){

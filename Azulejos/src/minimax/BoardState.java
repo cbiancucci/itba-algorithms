@@ -31,10 +31,9 @@ public abstract class BoardState {
 	
 	public BoardState getOptimalState(){
 		if(childs.size() == 0){
-			System.out.println("No more moves available");
 			return this;
 		}
-		int max = -GameCenter.INFINITE-1;
+		int max = -GameCenter.INFINITE - 1;
 		BoardState optimal = null;
 		for(BoardState child: childs){
 			int childScore = child.getScore();

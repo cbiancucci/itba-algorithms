@@ -1,10 +1,11 @@
 package main;
 
 import game.Board;
-import game.PlayMaker;
+import game.VisualPlay;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,10 +16,11 @@ import javax.swing.JPanel;
 public class InfoPanel extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
-	private PlayMaker playMaker;
+	private VisualPlay playMaker;
 	private int WIDTH;
+	private ImageIcon cross = new ImageIcon("Source/close-cross.jpg",  "Close Game");
 	
-	public InfoPanel(PlayMaker pm, int WIDTH) {
+	public InfoPanel(VisualPlay pm, int WIDTH) {
 		setLayout(null);
 		setSize(WIDTH, 40);
 		this.playMaker = pm;
@@ -26,7 +28,7 @@ public class InfoPanel extends JPanel{
 		
 		playMaker.setInfoPanel(this);
 		
-		JButton close = new JButton(new ImageIcon("Source/close-cross.jpg",  "Close Game"));
+		JButton close = new JButton(cross);
 		close.setBounds(WIDTH-16, 0, 16, 16);
 		close.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
@@ -57,6 +59,7 @@ public class InfoPanel extends JPanel{
 			g.setFont(g.getFont().deriveFont((float)12));
 			g.drawString("Thinking...", WIDTH*3/4, 34);
 		}
+		g.drawImage(cross.getImage(), WIDTH-16, 0, 16, 16, null);
 	}
 	
 }
