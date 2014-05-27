@@ -2,8 +2,9 @@ package main;
 
 import exceptions.UnsupportedSyntaxException;
 import game.Board;
+import game.ConsolePlay;
 import game.Options;
-import game.PlayMaker;
+import game.VisualPlay;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,7 +18,7 @@ public class GameCenter extends JFrame{
 	public static final int INFINITE=1000;
 	
 	private Board board;
-	private PlayMaker playMaker;
+	private VisualPlay playMaker;
 	private int HEIGHT, WIDTH, tileSIZE;
 	private Color[] colors;
 	
@@ -37,7 +38,7 @@ public class GameCenter extends JFrame{
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2-10);
 		
-		playMaker = new PlayMaker(board, options);
+		playMaker = new VisualPlay(board, options);
 		
 		BoardPanel boardPanel=new BoardPanel(playMaker,colors,tileSIZE, board.getWidth(), board.getHeight());
 		boardPanel.setBounds(0, 40, WIDTH, board.getHeight()*tileSIZE);
@@ -120,7 +121,7 @@ public class GameCenter extends JFrame{
 		if(visual)
 			new GameCenter(fileName, new Options(depth, maxTime, prune, tree));
 		else
-			System.out.println("Console mode");
+			new ConsolePlay(fileName, new Options(depth, maxTime, prune, tree));
 
 	}
 }
