@@ -35,7 +35,7 @@ public class Board {
 		gravity();
 		moveLeft();
 		pcTurn = !pcTurn;
-		if(gameOver()) points[player] *= 1.3;
+		if(board[0][0].getColor()==0) points[player] *= 1.3;
 		return true;
 	}
 	
