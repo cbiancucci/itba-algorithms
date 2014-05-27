@@ -62,6 +62,7 @@ public class Minimax implements Runnable{
 			}
 			
 		}
+		if(chosen == null) state.calculateScore();
 		return state.getScore();
 	}
 	
