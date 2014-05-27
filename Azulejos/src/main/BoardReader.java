@@ -31,7 +31,7 @@ public class BoardReader {
 						default:	b[i][j] = new Tile(c-'0');
 					}
 				}
-				br.read();br.read();
+				br.read();
 			}
 			
 			board = new Board(b, p1points, p2points);
