@@ -75,57 +75,52 @@ public class GameCenter extends JFrame{
 	
 	public static void main(String[] args) {
 		
-		if (args.length != 0){
-			
-			String fileName = "";
-			int maxTime = INFINITE;
-			int depth = 1;
-			boolean visual = false;
-			boolean prune = false;
-			boolean tree = false;
-			
-			for (int i = 0; i < args.length; i++){
-				
-				if(args[i].equalsIgnoreCase("-file") && args[i+1] != null){
-					fileName = args[i+1].toString();
-					i++;
-				}
-
-				else if(args[i].equalsIgnoreCase("-maxtime") && args[i+1] != null){
-					maxTime = Integer.valueOf(args[i+1]);
-					i++;
-				}
-					
-				else if(args[i].equalsIgnoreCase("-depth") && args[i+1] != null){
-					depth = Integer.valueOf(args[i+1]);
-					i++;
-				}
-				else if(args[i].equalsIgnoreCase("-visual")){
-					visual = true;
-				}
-				else if(args[i].equalsIgnoreCase("-console")){
-					visual = false;
-				}
-				else if(args[i].equalsIgnoreCase("-prune")){
-					prune = true;
-				}
-				else if(args[i].equalsIgnoreCase("-tree")){
-					tree = true;
-				}
-				else{
-					throw new UnsupportedSyntaxException();
-				}
-				
-			}
-			
-			if(visual)
-				new GameCenter(fileName, new Options(depth, maxTime, prune, tree));
-			else
-				System.out.println("Console mode");
-			
-		} else {
+		String fileName = null;
+		int maxTime = -1;
+		int depth = -1;
+		boolean visual = false;
+		boolean console = false;
+		boolean prune = false;
+		boolean tree = false;
+		
+		if (args.length < 5)
 			throw new UnsupportedSyntaxException();
+		else{
+				
+			if(args[0].equalsIgnoreCase("-file") && args[1] != null){
+				fileName = args[1];
+			}
+			if(args[2].equalsIgnoreCase("-maxTime") && args[3] != null){
+				maxTime = Integer.valueOf(args[3]);
+				depth = 1;
+			}
+			if(args[2].equalsIgnoreCase("-depth") && args[3] != null){
+				depth = Integer.valueOf(args[3]);
+				maxTime = INFINITE;
+			}
+			if(args[4].equalsIgnoreCase("-visual")){
+				visual = true;
+			}
+			if(args[4].equalsIgnoreCase("-console")){
+				console = true;
+			}
+			if(args.length > 5 && args[5].equalsIgnoreCase("-prune")){
+				prune = true;
+			}
+			if(args.length > 6 && args[6].equalsIgnoreCase("-tree")){
+				tree = true;
+			}
+				
+			if( (fileName == null) || (maxTime == -1) || (depth == -1) || (visual == console)){
+				throw new UnsupportedSyntaxException();
+			}
 		}
+			
+			
+		if(visual)
+			new GameCenter(fileName, new Options(depth, maxTime, prune, tree));
+		else
+			System.out.println("Console mode");
+
 	}
-	
 }
