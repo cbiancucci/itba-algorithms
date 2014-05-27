@@ -86,37 +86,33 @@ public class GameCenter extends JFrame{
 			
 			for (int i = 0; i < args.length; i++){
 				
-				switch (args[i]) {
-					case "-file":
-						if(args[i+1] != null)
-							fileName = args[i+1].toString();
-						i++;
-						break;
-					
-					case "-maxtime":
-						if(args[i+1] != null)
-							maxTime = Integer.valueOf(args[i+1]);
-						i++;
-						break;
+				if(args[i].equalsIgnoreCase("-file") && args[i+1] != null){
+					fileName = args[i+1].toString();
+					i++;
+				}
 
-					case "-depth":
-						if(args[i+1] != null)
-							depth = Integer.valueOf(args[i+1]);
-						i++;
-						break;
-						
-					case "-visual":
-						visual = true;
-						break;
+				else if(args[i].equalsIgnoreCase("-maxtime") && args[i+1] != null){
+					maxTime = Integer.valueOf(args[i+1]);
+					i++;
+				}
 					
-					case "-console":
-						visual = false;
-						break;
-						
-					case "-prune":
-						prune = true;
-						break;
-				default:
+				else if(args[i].equalsIgnoreCase("-depth") && args[i+1] != null){
+					depth = Integer.valueOf(args[i+1]);
+					i++;
+				}
+				else if(args[i].equalsIgnoreCase("-visual")){
+					visual = true;
+				}
+				else if(args[i].equalsIgnoreCase("-console")){
+					visual = false;
+				}
+				else if(args[i].equalsIgnoreCase("-prune")){
+					prune = true;
+				}
+				else if(args[i].equalsIgnoreCase("-tree")){
+					tree = true;
+				}
+				else{
 					throw new UnsupportedSyntaxException();
 				}
 				
