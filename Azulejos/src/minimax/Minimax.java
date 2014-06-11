@@ -97,30 +97,7 @@ public class Minimax implements Runnable{
 	}
 	
 	private void drawTree(){
-		BufferedWriter writer = null;
-
-		try {
-		    writer = new BufferedWriter(new OutputStreamWriter( new FileOutputStream("tree.dot"), "utf-8"));
-		    writer.write("digraph Tree{");
-		    writer.newLine();
-		    writer.write(root.hashCode() + " [label=\"START " + root.getScore() +"\"" + " style=filled  fillcolor=brown" +"]");
-			writer.newLine();
-		    root.drawTree(writer);
-		    writer.write("}");
-		} catch (IOException e) {
-			/**
-			 * Verify exceptions
-			 */
-		}
-		finally {
-		   try {
-			   writer.close();
-		   } catch (Exception e) {
-			   /**
-			    * TODO: Verify exceptions.
-			    */
-		   }
-		}
+		TreeDrawer.drawMovement(root);
 	}
 	
 }
