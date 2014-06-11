@@ -67,19 +67,7 @@ public abstract class BoardState {
 	}
 	
 	public void drawTree(BufferedWriter writer) throws IOException{
-		for(BoardState child:childs){
-			writer.write(child.hashCode() + " [label=" + child.getLabel());
-			if(!child.isMax()) writer.write(" shape=box ");
-			if(child.pruned || child.chosen) writer.write(" style=filled ");
-			if(child.chosen) writer.write(" fillcolor=brown ");
-			writer.write("]");
-			writer.newLine();
-			writer.write(hashCode()+"->"+child.hashCode());
-			writer.newLine();
-		}
-		for(BoardState child:childs){
-			child.drawTree(writer);
-		}
+		TreeDrawer.drawTree(this, writer);
 	}
 	
 	public Board getBoard(){
@@ -95,6 +83,18 @@ public abstract class BoardState {
 	}
 	
 	public abstract boolean isMax();
+	
+	public boolean isPruned(){
+		return pruned;
+	}
+	
+	public boolean isChosen(){
+		return chosen;
+	}
+	
+	public List<BoardState> getChilds(){
+		return childs;
+	}
 	
 	public int calculateScore(){
 		score = board.getScore();

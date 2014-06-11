@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.List;
 
 public class TreeDrawer {
 
@@ -35,6 +34,20 @@ public class TreeDrawer {
 		}
 	}
 
-	public static void drawTree(List<BoardState> childs){
+	public static void drawTree(BoardState bs, BufferedWriter writer) throws IOException{
+		
+		for(BoardState child: bs.getChilds()){
+			writer.write(child.hashCode() + " [label=" + child.getLabel());
+			if(!child.isMax()) writer.write(" shape=box ");
+			if(child.isPruned() || child.isChosen()) writer.write(" style=filled ");
+			if(child.isChosen()) writer.write(" fillcolor=brown ");
+			writer.write("]");
+			writer.newLine();
+			writer.write(bs.hashCode()+"->"+child.hashCode());
+			writer.newLine();
+		}
+		for(BoardState child: bs.getChilds()){
+			TreeDrawer.drawTree(child, writer);
+		}
 	}
 }
